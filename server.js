@@ -60,13 +60,13 @@ app.get("/scrape", function (req, res) {
 			result.img = $(this).find("figure").find("img").attr("src");
 			result.summary = $(this).find("p").text();
 
-			console.log(result);
+			// console.log(result);
 
-			// db.Article.create(result).then(function (dbArticle) {
-			// 	console.log(dbArticle);
-			// }).catch(function (err) {
-			// 	console.log(err);
-			// });
+			db.Article.create(result).then(function (dbArticle) {
+				console.log(dbArticle);
+			}).catch(function (err) {
+				console.log(err);
+			});
 
 		});
 
@@ -74,3 +74,5 @@ app.get("/scrape", function (req, res) {
 	});
 
 });
+
+// route for getting all articles
