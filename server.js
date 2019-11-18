@@ -38,6 +38,27 @@ app.listen(port, function () {
 });
 
 // ROUTES ===
+// main route -- render index page
 app.get("/", function (req, res) {
 	res.render("index");
+});
+
+// get route for scraping site
+app.get("/scrape", function (req, res) {
+	axios.get("https://www.nytimes.com/section/world").then(function (response) {
+		var $ = cheerio.load(response.data);
+
+		$("article h2").each(function (i, element) {
+			var result = {};
+
+			result.title = $(this).children("a").text();
+			result.link = $(this).children("a").attr("href");
+
+			console.log(result);
+
+		});
+
+		res.send("Scrape Complete");
+	});
+
 });
