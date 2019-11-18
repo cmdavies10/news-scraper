@@ -28,9 +28,13 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // connect to db
-mongoose.connect("mongodb://localhost/scrapeData", {
-	useNewUrlParser: true
-});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeData";
+
+mongoose.connect(MONGODB_URI);
+
+// mongoose.connect("mongodb://localhost/scrapeData", {
+// 	useNewUrlParser: true
+// });
 
 // listen
 app.listen(port, function () {
@@ -48,13 +52,21 @@ app.get("/scrape", function (req, res) {
 	axios.get("https://www.nytimes.com/section/world").then(function (response) {
 		var $ = cheerio.load(response.data);
 
-		$("article h2").each(function (i, element) {
+		$("article").each(function (i, element) {
 			var result = {};
 
-			result.title = $(this).children("a").text();
-			result.link = $(this).children("a").attr("href");
+			result.title = $(this).find("h2").children("a").text();
+			result.link = $(this).find("h2").children("a").attr("href");
+			result.img = $(this).find("figure").find("img").attr("src");
+			result.summary = $(this).find("p").text();
 
 			console.log(result);
+
+			// db.Article.create(result).then(function (dbArticle) {
+			// 	console.log(dbArticle);
+			// }).catch(function (err) {
+			// 	console.log(err);
+			// });
 
 		});
 
