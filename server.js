@@ -32,10 +32,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeData";
 
 mongoose.connect(MONGODB_URI);
 
-// mongoose.connect("mongodb://localhost/scrapeData", {
-// 	useNewUrlParser: true
-// });
-
 // listen
 app.listen(port, function () {
 	console.log("Listening on port " + port);
@@ -49,6 +45,8 @@ app.get("/", function (req, res) {
 
 // get route for scraping site
 app.get("/scrape", function (req, res) {
+	// db.articles.remove();
+
 	axios.get("https://www.nytimes.com/section/world").then(function (response) {
 		var $ = cheerio.load(response.data);
 
@@ -60,8 +58,6 @@ app.get("/scrape", function (req, res) {
 			result.img = $(this).find("figure").find("img").attr("src");
 			result.summary = $(this).find("p").text();
 
-			// console.log(result);
-
 			db.Article.create(result).then(function (dbArticle) {
 				console.log(dbArticle);
 			}).catch(function (err) {
@@ -70,7 +66,8 @@ app.get("/scrape", function (req, res) {
 
 		});
 
-		res.send("Scrape Complete");
+		console.log("Scrape Complete");
+		res.redirect("/");
 	});
 
 });
