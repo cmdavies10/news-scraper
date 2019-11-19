@@ -40,7 +40,18 @@ app.listen(port, function () {
 // ROUTES ===
 // main route -- render index page
 app.get("/", function (req, res) {
-	res.render("index");
+	db.Article.find({}, function (err, data) {
+		if (data.length === 0) {
+			res.render("index", {
+				message: "Scrape to get data."
+			});
+		} else {
+			res.render("index", {
+				articles: data
+			});
+		}
+	})
+	// res.render("index");
 });
 
 // get route for scraping site
@@ -122,9 +133,9 @@ app.delete("/comments/:id", function (req, res) {
 	console.log("Params: " + req.params.id);
 	// console.log(dbComment._id);
 
-	db.Comment.findOneAndDelete({
+	db.Comment.remove({
 		_id: req.params.id
-	}).then(function (response) {
+	}).then(function (dbComment) {
 		console.log("Deleted Successfully");
 	}).catch(function (err) {
 		console.log(err);

@@ -31,9 +31,7 @@ $(document).on("click", "#add-comment", function () {
 		url: "/articles/" + thisId
 	}).then(function (data) {
 		console.log(data);
-		// console.log(data.comment._id);
-		// The title of the article
-		// if (data.comment._id) {
+
 		$("#comments").append(
 			"<h5>" + data.title + "</h5><br/>" +
 			// "<input id='titleinput' name='title'><br/>" +
@@ -41,7 +39,7 @@ $(document).on("click", "#add-comment", function () {
 			"<span><button data-id='" + data._id + "' id='savecomment'>Save Comment</button>" +
 
 			// UPDATE data._id vs. data.comment._id ================
-			"<button data-id='" + data._id + "' id='deletecomment'>Delete Comment</button></span>"
+			"<button data-id='" + data.comment._id + "' id='deletecomment'>Delete Comment</button></span>"
 		);
 		// } else {
 		// 	$("#comments").append(
@@ -70,7 +68,7 @@ $(document).on("click", "#savecomment", function () {
 	// Grab the id associated with the article from the submit button
 	var thisId = $(this).attr("data-id");
 
-	// Run a POST request to change the note, using what's entered in the inputs
+	// Run a POST request to change the comment, using what's entered in the inputs
 	$.ajax({
 		method: "POST",
 		url: "/articles/" + thisId,
