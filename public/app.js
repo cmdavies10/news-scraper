@@ -1,11 +1,3 @@
-// $.getJSON("/articles", function (data) {
-// 	for (var i = 0; i < data.length; i++) {
-// 		$("#title").append(data[i].title);
-// 		$(".card").attr("data-id", data[i]._id);
-// 		$(".card-header").text(data[i].title);
-// 	}
-// });
-
 $.getJSON("/articles", function (data) {
 	// For each one
 	for (var i = 0; i < data.length; i++) {
@@ -14,6 +6,8 @@ $.getJSON("/articles", function (data) {
 			"<p><strong>" + data[i].title + "</strong></p><br/>" +
 			"<p>" + data[i].summary + " | " +
 			"<a href='" + "https://www.nytimes.com" + data[i].link + "'>" + "Full Article</a></p><br/>" +
+			// "<p id='comments'></p><br/>" +
+			// "<textarea placeholder='Insert comment'></textarea>" +
 			"<button data-id='" + data[i]._id + "' id='add-comment'>Comment</button><br/><hr/>");
 		// "<p>" + "<a href='/articles/" + data[i]._id + "' id='add-comment'>Comment</a>" + " | " +
 		// "<a href='" + data[i]._id + "'>" + "Edit Comment</a>" + " | " +
@@ -24,11 +18,6 @@ $.getJSON("/articles", function (data) {
 	}
 });
 
-// $(".add-comment").on("click", function () {
-// 	console.log("working");
-// 	alert("working");
-// })
-
 $(document).on("click", "#add-comment", function () {
 	// Empty the notes from the note section
 	$("#comments").empty();
@@ -38,32 +27,29 @@ $(document).on("click", "#add-comment", function () {
 
 	// Now make an ajax call for the Article
 	$.ajax({
-			method: "GET",
-			url: "/articles/" + thisId
-		})
-		// With that done, add the note information to the page
-		.then(function (data) {
-			console.log(data);
-			// The title of the article
-			$("#comments").append("<h3>" + data.title + "</h3>");
-			// An input to enter a new title
-			$("#comments").append("<input id='titleinput' name='title' >");
-			// A textarea to add a new note body
-			$("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
-			// A button to submit a new note, with the id of the article saved to it
-			$("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+		method: "GET",
+		url: "/articles/" + thisId
+	}).then(function (data) {
+		console.log(data);
+		// The title of the article
+		$("#comments").append(
+			"<div><h5>" + data.title + "</h5><br/>" +
+			// "<input id='titleinput' name='title'><br/>" +
+			"<textarea id='bodyinput' name='body'></textarea><br/>" +
+			"<button data-id='" + data._id + "' id='savecomment'>Save Comment</button></div>"
+		);
 
-			// If there's a note in the article
-			if (data.comment) {
-				// Place the title of the note in the title input
-				$("#titleinput").val(data.comment.title);
-				// Place the body of the note in the body textarea
-				$("#bodyinput").val(data.comment.body);
-			}
-		});
+		// If there's a note in the article
+		if (data.comment) {
+			// Place the title of the note in the title input
+			$("#titleinput").val(data.comment.title);
+			// Place the body of the note in the body textarea
+			$("#bodyinput").val(data.comment.body);
+		}
+	});
 });
 
-$(document).on("click", "#savenote", function () {
+$(document).on("click", "#savecomment", function () {
 	// Grab the id associated with the article from the submit button
 	var thisId = $(this).attr("data-id");
 
