@@ -3,7 +3,8 @@ $.getJSON("/articles", function (data) {
 	for (var i = 0; i < data.length; i++) {
 		$("#articles").append(
 			// "<div data-id='" + data[i]._id + "'>" +
-			"<p><strong>" + data[i].title + "</strong></p><br/>" +
+			"<br/><img src='" + data[i].img + "' height='400' width='700'><br/><br/>" +
+			"<h3>" + data[i].title + "</h3><br/>" +
 			"<p>" + data[i].summary + " | " +
 			"<a href='" + "https://www.nytimes.com" + data[i].link + "'>" + "Full Article</a></p><br/>" +
 			// "<p id='comments'></p><br/>" +
@@ -30,22 +31,38 @@ $(document).on("click", "#add-comment", function () {
 		url: "/articles/" + thisId
 	}).then(function (data) {
 		console.log(data);
+		// console.log(data.comment._id);
 		// The title of the article
+		// if (data.comment._id) {
 		$("#comments").append(
 			"<h5>" + data.title + "</h5><br/>" +
 			// "<input id='titleinput' name='title'><br/>" +
 			"<textarea id='bodyinput' name='body'></textarea><br/>" +
 			"<span><button data-id='" + data._id + "' id='savecomment'>Save Comment</button>" +
+
+			// UPDATE data._id vs. data.comment._id ================
 			"<button data-id='" + data._id + "' id='deletecomment'>Delete Comment</button></span>"
 		);
+		// } else {
+		// 	$("#comments").append(
+		// 		"<h5>" + data.title + "</h5><br/>" +
+		// 		// "<input id='titleinput' name='title'><br/>" +
+		// 		"<textarea id='bodyinput' name='body'></textarea><br/>" +
+		// 		"<button data-id='" + data._id + "' id='savecomment'>Save Comment</button>"
 
-		// If there's a note in the article
+		// 		// UPDATE data._id vs. data.comment._id ================
+		// 		// "<button data-id='" + data.comment._id + "' id='deletecomment'>Delete Comment</button></span>"
+		// 	);
+		// }
+
+
+		// If there's a comment in the article
 		if (data.comment) {
 			// Place the title of the note in the title input
-			$("#titleinput").val(data.comment.title);
+			$("#titleinput").val(data.comment.title); // not using
 			// Place the body of the note in the body textarea
 			$("#bodyinput").val(data.comment.body);
-		}
+		};
 	});
 });
 
@@ -71,6 +88,25 @@ $(document).on("click", "#savecomment", function () {
 	});
 
 	// Also, remove the values entered in the input and textarea for note entry
+	$("#titleinput").val("");
+	$("#bodyinput").val("");
+});
+
+$(document).on("click", "#deletecomment", function () {
+	var thisId = $(this).attr("data-id");
+
+	console.log(thisId);
+
+	$.ajax({
+		method: "DELETE",
+		url: "/comments/" + thisId
+	}).then(function (data) {
+		console.log(data);
+		$("#comments").empty();
+	}).catch(function (err) {
+		console.log(err);
+	});
+
 	$("#titleinput").val("");
 	$("#bodyinput").val("");
 });

@@ -81,6 +81,15 @@ app.get("/articles", function (req, res) {
 	});
 });
 
+// route to get all comments
+app.get("/comments", function (req, res) {
+	db.Comment.find({}).then(function (dbComment) {
+		res.json(dbComment);
+	}).catch(function (err) {
+		res.json(err);
+	});
+});
+
 // grab an article and populate it with it's comments
 app.get("/articles/:id", function (req, res) {
 	db.Article.findOne({
@@ -105,5 +114,19 @@ app.post("/articles/:id", function (req, res) {
 		res.json(dbArticle);
 	}).catch(function (err) {
 		res.json(err);
+	});
+});
+
+
+app.delete("/comments/:id", function (req, res) {
+	console.log("Params: " + req.params.id);
+	// console.log(dbComment._id);
+
+	db.Comment.findOneAndDelete({
+		_id: req.params.id
+	}).then(function (response) {
+		console.log("Deleted Successfully");
+	}).catch(function (err) {
+		console.log(err);
 	});
 });
