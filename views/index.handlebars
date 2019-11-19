@@ -20,12 +20,27 @@
 	<div class="container">
 		{{#each articles}}
 		<div class="card">
-			<div class="card-header">{{this.title}}</div>
+			<div class="card-header">
+				<h5>{{this.title}}</h5>
+			</div>
 			<div class="card-body">
-				<p class="card-text">{{this.summary}}</p>
-				<a href="'https://www.nytimes.com' + {{this.link}}" class="btn btn-primary">Full Article</a>
+				{{!-- <img src="{{this.img}}" alt="photo" class="card-img-top"> --}}
+				<p class="card-text">{{this.summary}} | <a href="'https://www.nytimes.com' + {{this.link}} + ">Full
+						Article</a></p>
+				<hr>
+				<div id="comments"></div>
+				{{!-- <textarea name="body" id="bodyinput" cols="150" rows="2"></textarea> --}}
+				{{!-- <button class="btn btn-primary" id="savecomment" data-id="{{this._id}}">Save Comment</button> --}}
+				{{!-- <hr> --}}
+
+				{{!-- {{#unless this.comment}} --}}
+				<button class="btn btn-primary" id="add-comment" data-id="{{this._id}}">Add Comment</button>
+				{{!-- {{/unless}} --}}
 			</div>
 		</div>
+		<br>
+		<hr>
+		<br>
 		{{/each}}
 	</div>
 </div>
