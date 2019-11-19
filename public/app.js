@@ -19,13 +19,12 @@ $.getJSON("/articles", function (data) {
 });
 
 $(document).on("click", "#add-comment", function () {
-	// Empty the notes from the note section
 	$("#comments").empty();
-	// Save the id from the p tag
+
 	var thisId = $(this).attr("data-id");
 	console.log(thisId);
 
-	// Now make an ajax call for the Article
+
 	$.ajax({
 		method: "GET",
 		url: "/articles/" + thisId
@@ -33,10 +32,11 @@ $(document).on("click", "#add-comment", function () {
 		console.log(data);
 		// The title of the article
 		$("#comments").append(
-			"<div><h5>" + data.title + "</h5><br/>" +
+			"<h5>" + data.title + "</h5><br/>" +
 			// "<input id='titleinput' name='title'><br/>" +
 			"<textarea id='bodyinput' name='body'></textarea><br/>" +
-			"<button data-id='" + data._id + "' id='savecomment'>Save Comment</button></div>"
+			"<span><button data-id='" + data._id + "' id='savecomment'>Save Comment</button>" +
+			"<button data-id='" + data._id + "' id='deletecomment'>Delete Comment</button></span>"
 		);
 
 		// If there's a note in the article
