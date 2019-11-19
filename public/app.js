@@ -9,7 +9,7 @@ $.getJSON("/articles", function (data) {
 			"<a href='" + "https://www.nytimes.com" + data[i].link + "'>" + "Full Article</a></p><br/>" +
 			// "<p id='comments'></p><br/>" +
 			// "<textarea placeholder='Insert comment'></textarea>" +
-			"<button data-id='" + data[i]._id + "' id='add-comment'>Comment</button><br/><hr/>");
+			"<button data-id='" + data[i]._id + "' id='add-comment' class='btn btn-primary'>Comment</button><br/><hr/>");
 		// "<p>" + "<a href='/articles/" + data[i]._id + "' id='add-comment'>Comment</a>" + " | " +
 		// "<a href='" + data[i]._id + "'>" + "Edit Comment</a>" + " | " +
 
@@ -35,7 +35,7 @@ $(document).on("click", "#add-comment", function () {
 		$("#comments").append(
 			"<h5>" + data.title + "</h5><br/>" +
 			// "<input id='titleinput' name='title'><br/>" +
-			"<textarea id='bodyinput' name='body'></textarea><br/>" +
+			"<textarea id='bodyinput' name='body' cols='50' rows='10'></textarea><br/>" +
 			"<span><button data-id='" + data._id + "' id='savecomment'>Save Comment</button>" +
 
 			// UPDATE data._id vs. data.comment._id ================
