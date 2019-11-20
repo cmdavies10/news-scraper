@@ -1,31 +1,47 @@
-<div class="jumbotron text-center bg-dark text-white">
+<div class="jumbotron text-center bg-info text-white">
 	<h2>MONGO SCRAPER</h2>
 	<p>New York Times - World Headlines</p>
 	<br>
 	<a href="/scrape" class="btn btn-danger">Scrape New Data</a>
 </div>
 
-<div class="container">
+{{!-- <div class="container">
 	<div class="row">
 		<div class="col-8" id="articles"></div>
 		<div class="col-4" id="comments"></div>
 	</div>
-</div>
+</div> --}}
 
 {{!-- {{#each articles}}
 {{this.title}}
 {{/each}} --}}
 
-{{!-- <div class="wrapper">
+<div class="wrapper">
 	<div class="container">
-		{{#each articles}}
-		<div class="card">
-			<div class="card-header">{{this.title}}</div>
-			<div class="card-body">
-				<p class="card-text">{{this.summary}}</p>
-				<a href="'https://www.nytimes.com' + {{this.link}}" class="btn btn-primary">Full Article</a>
+		<div class="row">
+			<div class="col-8">
+				{{#each articles}}
+				<div class="card">
+					<div class="card-header bg-light">
+						<h5>{{this.title}}</h5>
+					</div>
+					<div class="card-body">
+						<p class="card-text">{{this.summary}} | <a href="https:www.nytimes.com{{this.link}}">Full
+								Article</a></p>
+						{{!-- <a href="'https://www.nytimes.com' + {{this.link}}" class="btn btn-primary">Full Article</a> --}}
+						<button type="button" class="btn btn-primary" id="add-comment" data-toggle="modal"
+							data-target="#commentModal" data-id="{{this._id}}">View / Add Comments</button>
+					</div>
+				</div>
+				<br>
+				{{/each}}
 			</div>
+
+			<div class="col-4" id="comments"></div>
 		</div>
-		{{/each}}
 	</div>
-</div> --}}
+</div>
+
+{{#each articles}}
+{{> comments-modal}}
+{{/each}}

@@ -128,6 +128,17 @@ app.post("/articles/:id", function (req, res) {
 	});
 });
 
+app.post("/articles/:id", function (req, res) {
+	db.Article.findOneAndUpdate({
+		_id: req.params.id
+	}, {
+		comment: []
+	}).then(function (dbArticle) {
+		res.json(dbArticle);
+	}).catch(function (err) {
+		res.json(err);
+	});
+});
 
 app.delete("/comments/:id", function (req, res) {
 	console.log("Params: " + req.params.id);
@@ -136,6 +147,19 @@ app.delete("/comments/:id", function (req, res) {
 	db.Comment.remove({
 		_id: req.params.id
 	}).then(function (dbComment) {
+		console.log("Deleted Successfully");
+	}).catch(function (err) {
+		console.log(err);
+	});
+});
+
+app.delete("/articles/:id", function (req, res) {
+	console.log("Params: " + req.params.id);
+	console.log(dbComment._id);
+
+	db.Article.remove({
+		_id: dbComment._id
+	}).then(function (dbArticle) {
 		console.log("Deleted Successfully");
 	}).catch(function (err) {
 		console.log(err);
