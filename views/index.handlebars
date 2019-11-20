@@ -12,10 +12,6 @@
 	</div>
 </div> --}}
 
-{{!-- {{#each articles}}
-{{this.title}}
-{{/each}} --}}
-
 <div class="wrapper">
 	<div class="container">
 		<div class="row">
@@ -28,9 +24,8 @@
 					<div class="card-body">
 						<p class="card-text">{{this.summary}} | <a href="https:www.nytimes.com{{this.link}}">Full
 								Article</a></p>
-						{{!-- <a href="'https://www.nytimes.com' + {{this.link}}" class="btn btn-primary">Full Article</a> --}}
-						<button type="button" class="btn btn-primary" id="add-comment" data-toggle="modal"
-							data-target="#commentModal" data-id="{{this._id}}">View / Add Comments</button>
+						<button type="button" class="btn btn-primary" id="add-comment" data-id="{{this._id}}">View / Add
+							Comments</button>
 					</div>
 				</div>
 				<br>
@@ -41,7 +36,3 @@
 		</div>
 	</div>
 </div>
-
-{{#each articles}}
-{{> comments-modal}}
-{{/each}}

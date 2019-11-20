@@ -56,8 +56,6 @@ app.get("/", function (req, res) {
 
 // get route for scraping site
 app.get("/scrape", function (req, res) {
-	// db.articles.remove();
-
 	axios.get("https://www.nytimes.com/section/world").then(function (response) {
 		var $ = cheerio.load(response.data);
 
@@ -140,28 +138,28 @@ app.post("/articles/:id", function (req, res) {
 	});
 });
 
-app.delete("/comments/:id", function (req, res) {
-	console.log("Params: " + req.params.id);
-	// console.log(dbComment._id);
+// app.delete("/comments/:id", function (req, res) {
+// 	console.log("Params: " + req.params.id);
+// 	// console.log(dbComment._id);
 
-	db.Comment.remove({
-		_id: req.params.id
-	}).then(function (dbComment) {
-		console.log("Deleted Successfully");
-	}).catch(function (err) {
-		console.log(err);
-	});
-});
+// 	db.Comment.remove({
+// 		_id: req.params.id
+// 	}).then(function (dbComment) {
+// 		console.log("Deleted Successfully");
+// 	}).catch(function (err) {
+// 		console.log(err);
+// 	});
+// });
 
-app.delete("/articles/:id", function (req, res) {
-	console.log("Params: " + req.params.id);
-	console.log(dbComment._id);
+// app.delete("/articles/:id", function (req, res) {
+// 	console.log("Params: " + req.params.id);
+// 	console.log(dbComment._id);
 
-	db.Article.remove({
-		_id: dbComment._id
-	}).then(function (dbArticle) {
-		console.log("Deleted Successfully");
-	}).catch(function (err) {
-		console.log(err);
-	});
-});
+// 	db.Article.remove({
+// 		_id: dbComment._id
+// 	}).then(function (dbArticle) {
+// 		console.log("Deleted Successfully");
+// 	}).catch(function (err) {
+// 		console.log(err);
+// 	});
+// });

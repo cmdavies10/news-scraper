@@ -1,15 +1,20 @@
-# Mongo Scraper: New York Times - World Headlines
+# Mongo Scraper: New York Times - World Section
 
 ### OVERVIEW
 
-1. Whenever a user visits your site, the app should scrape stories from a news outlet of your choice and display them for the user. Each scraped article should be saved to your application database. At a minimum, the app should scrape and display the following information for each article:
+This app scrapes articles from the New York Times website and lets users post comments on the latest news.
 
-     * Headline - the title of the article
+[Click to view deployed app](https://guarded-tundra-18857.herokuapp.com/)
 
-     * Summary - a short summary of the article
+### TECHNOLOGY USED
+* Node
+* MongoDB
+* Express
+* Express-handlebars
+* Mongoose
+* Axios
+* Cheerio
+* Morgan
 
-     * URL - the url to the original article
 
-     * Feel free to add more content to your database (photos, bylines, and so on).
 
-  2. Users should also be able to leave comments on the articles displayed and revisit them later. The comments should be saved to the database as well and associated with their articles. Users should also be able to delete comments left on articles. All stored comments should be visible to every user.
