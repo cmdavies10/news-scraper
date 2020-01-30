@@ -1,4 +1,4 @@
-# Mongo Scraper: New York Times - World Section
+# News Scraper: New York Times - World Section
 
 ### OVERVIEW
 
